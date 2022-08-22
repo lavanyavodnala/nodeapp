@@ -1,5 +1,8 @@
+require("dotenv").config();
+const jwt = require('jsonwebtoken')
 const User = require('../models/userModel');
 const user =require('../models/userModel');
+
 const user_index = (req,res)=>{
     User.find()
       .then((result)=>{
@@ -12,7 +15,10 @@ const user_index = (req,res)=>{
 
 const user_check = (req,res)=>{
   console.log(req.body)
-  User.findOne({username: req.body.username,email:req.body.useremail,password:req.body.userpassword})
+  User.findOne({username:req.body.username,password:req.body.userpassword})
+  const accessToken = jwt.sign(req.body,process.env.ACCESS_TOKEN_SECRET)
+  console.log(accessToken)
+   res.json({accessToken:accessToken})
   .then((result)=>{
     if(result){
       res.send(result)

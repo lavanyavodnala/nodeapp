@@ -1,24 +1,24 @@
-const bodyParser = require('body-parser');
-const { response } = require('express');
-const express = require('express');
+
+const bodyParser = require("body-parser");
+const { response } = require("express");
+const express = require("express");
 const app = express();
 
 //const http = require('http');
 const port = 3000;
-const hostname = 'localhost'
-const cors = require('cors');
-var path = require('path');
-var userRouter = require('./routes/userroute.js');
-const User = require('./models/userModel');
-
+const hostname = "localhost";
+const cors = require("cors");
+var path = require("path");
+var userRouter = require("./routes/userroute.js");
+const User = require("./models/userModel");
 
 var url = "mongodb://localhost:27017/homedb";
 
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use(cors());
-app.use(userRouter)
+app.use(userRouter);
 
 // 2nd way of connecting to mongodb
 //const { MongoClient} = require('mongodb');
@@ -39,27 +39,22 @@ app.use(userRouter)
 //     .finally(()=>client.close());
 
 // database connection
- 
-const mongoose = require('mongoose');
-mongoose.connect(url,{useNewurlParser:true,useUnifiedTopology:true})
- .then((result)=>{
-    console.log("db connection succeeded")
- })
- .catch((err)=>{
-    console.log("error",err)
- })
 
+const mongoose = require("mongoose");
+mongoose
+  .connect(url, { useNewurlParser: true, useUnifiedTopology: true })
+  .then((result) => {
+    console.log("db connection succeeded");
+  })
+  .catch((err) => {
+    console.log("error", err);
+  });
 
-
-
-
-
-var server = app.listen(8888,function(){
-    var host = server.address().address;
-    var port = server.address().port;
-    console.log("app is listerning at http:", host , port)
+var server = app.listen(8888, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log("app is listerning at http:", host, port);
 });
-
 
 // this is for http route code
 
